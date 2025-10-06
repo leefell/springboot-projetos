@@ -1,10 +1,11 @@
-package dev.leefell.CadastroDeNinjas;
+package dev.leefell.CadastroDeNinjas.Ninjas.Model;
 
+import dev.leefell.CadastroDeNinjas.Missoes.Model.MissoesModel;
 import jakarta.persistence.*;
 
 // JPA = Java Persistence API
 @Entity // transorma uma classe em entidade do DB
-@Table(name = "tb_cadastro")
+@Table(name = "tb_ninjas")
 public class NinjaModel {
 
     @Id // O Atributo abaixo dele é o ID
@@ -13,6 +14,12 @@ public class NinjaModel {
     private String nome;
     private String email;
     private int idade;
+
+    // @ManyToOne - um ninja tem uma unica missao
+    @ManyToOne
+    @JoinColumn(name = "missoes_id") // Foreing Key
+    private MissoesModel missoes;
+
 
     public NinjaModel() {
     }

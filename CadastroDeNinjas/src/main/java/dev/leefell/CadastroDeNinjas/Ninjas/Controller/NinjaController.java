@@ -1,4 +1,4 @@
-package dev.leefell.CadastroDeNinjas;
+package dev.leefell.CadastroDeNinjas.Ninjas.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
