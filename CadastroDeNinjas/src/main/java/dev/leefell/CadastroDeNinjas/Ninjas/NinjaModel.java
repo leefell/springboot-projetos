@@ -1,6 +1,6 @@
-package dev.leefell.CadastroDeNinjas.Ninjas.Model;
+package dev.leefell.CadastroDeNinjas.Ninjas;
 
-import dev.leefell.CadastroDeNinjas.Missoes.Model.MissoesModel;
+import dev.leefell.CadastroDeNinjas.Missoes.MissoesModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +20,14 @@ public class NinjaModel {
     @Id // O Atributo abaixo dele é o ID
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "nome")
     private String nome;
 
     @Column(unique = true)
     private String email;
-    
+
+    @Column(name = "idade")
     private int idade;
 
     // @ManyToOne - um ninja tem uma unica missao

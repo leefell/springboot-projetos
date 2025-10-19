@@ -1,6 +1,6 @@
-package dev.leefell.CadastroDeNinjas.Missoes.Model;
+package dev.leefell.CadastroDeNinjas.Missoes;
 
-import dev.leefell.CadastroDeNinjas.Ninjas.Model.NinjaModel;
+import dev.leefell.CadastroDeNinjas.Ninjas.NinjaModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
