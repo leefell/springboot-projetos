@@ -3,9 +3,17 @@ package dev.leefell.CadastroDeNinjas.Ninjas;
 import org.hibernate.annotations.SoftDelete;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController // Indica que esta classe é um controller REST (retorna dados, não páginas HTML)
 @RequestMapping("/ninjas") // Define a URL base para os endpoints deste controller
 public class NinjaController {
+
+    private NinjaService ninjaService;
+
+    public NinjaController(NinjaService ninjaService) {
+        this.ninjaService = ninjaService;
+    }
 
     @GetMapping("/boasvindas") // Mapeia requisições GET no caminho "/boasvindas"
     public String boasVindas() {
@@ -19,9 +27,9 @@ public class NinjaController {
     }
 
     // Mostrar (READ)
-    @GetMapping("/todos")
-    public String buscarTodosOsNinjas() {
-        return "Todos os ninjas";
+    @GetMapping("/listar")
+    public List<NinjaModel> listarNinjas() {
+        return ninjaService.listarNinjas();
     }
 
     // Procura por ID (READ)
