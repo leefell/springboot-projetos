@@ -1,5 +1,6 @@
 package dev.leefell.CadastroDeNinjas.Missoes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.leefell.CadastroDeNinjas.Ninjas.NinjaModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class MissoesModel {
 
     // @OneToMany - uma missao pode ter varios ninjas
     @OneToMany(mappedBy = "missoes") // mapeando o relacionamento através da chave estrangeira
+    @JsonIgnore // Para não ocorrer o loop de serialização
     private List<NinjaModel> ninjas;
 
 }
