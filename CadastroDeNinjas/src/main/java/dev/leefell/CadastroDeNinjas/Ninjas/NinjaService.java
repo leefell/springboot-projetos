@@ -2,7 +2,9 @@ package dev.leefell.CadastroDeNinjas.Ninjas;
 
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NinjaService {
@@ -18,5 +20,11 @@ public class NinjaService {
     public List<NinjaModel> listarNinjas() {
         // Metodo do JPA que executa automaticamente uma query SELECT * FROM na tabela de ninjas
         return ninjaRepository.findAll();
+    }
+
+    // Listar ninjas por ID
+    public NinjaModel listarNinjaPorID(Long id) {
+        Optional<NinjaModel> ninjaModel = ninjaRepository.findById(id);
+        return ninjaModel.orElse(null); // Se o ninja existir ele vai retornar, se não null
     }
 }

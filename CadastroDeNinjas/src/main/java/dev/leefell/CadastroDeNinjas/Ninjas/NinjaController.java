@@ -33,9 +33,10 @@ public class NinjaController {
     }
 
     // Procura por ID (READ)
-    @GetMapping("/ID")
-    public String buscarNinjaPorID() {
-        return "ninja com id tal";
+    @GetMapping("/listar/{id}")
+    public NinjaModel listarNinjaPorID(@PathVariable Long id) {
+        // @PathVariable assina que a o argumento é o id vindo da url
+        return ninjaService.listarNinjaPorID(id);
     }
 
     // Alterar dados (UPDATE)
