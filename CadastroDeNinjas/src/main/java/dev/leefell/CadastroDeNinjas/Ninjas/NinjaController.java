@@ -21,9 +21,9 @@ public class NinjaController {
     }
 
     // Adiciona (CREATE)
-    @PostMapping("/criar")
-    public String criarNinja() {
-        return "Ninja criado";
+    @PostMapping("/criar") // @RequestBody -> sinaliza que o usuário tem que mandar uma requisição com corpo
+    public NinjaModel criarNinja(@RequestBody NinjaModel ninjaModel) {
+        return ninjaService.criarNinja(ninjaModel);
     }
 
     // Mostrar (READ)

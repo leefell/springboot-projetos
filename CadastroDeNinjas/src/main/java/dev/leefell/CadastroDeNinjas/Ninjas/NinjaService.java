@@ -27,4 +27,9 @@ public class NinjaService {
         Optional<NinjaModel> ninjaModel = ninjaRepository.findById(id);
         return ninjaModel.orElse(null); // Se o ninja existir ele vai retornar, se não null
     }
+
+    // Criar um ninja
+    public NinjaModel criarNinja(NinjaModel ninjaModel){
+        return ninjaRepository.save(ninjaModel);
+    }
 }
