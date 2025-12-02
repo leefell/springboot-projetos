@@ -2,7 +2,6 @@ package dev.leefell.CadastroDeNinjas.Ninjas;
 
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,5 +30,10 @@ public class NinjaService {
     // Criar um ninja
     public NinjaModel criarNinja(NinjaModel ninjaModel){
         return ninjaRepository.save(ninjaModel);
+    }
+
+    // Deletar o ninja
+    public void deletarNinjaPorID(Long id){
+        ninjaRepository.deleteById(id);
     }
 }

@@ -1,6 +1,5 @@
 package dev.leefell.CadastroDeNinjas.Ninjas;
 
-import org.hibernate.annotations.SoftDelete;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,8 +45,8 @@ public class NinjaController {
     }
 
     // Deletar (DELETE)
-    @DeleteMapping("/ID")
-    public String deletarNinjaPorID() {
-        return "Ninja deletado";
+    @DeleteMapping("/deletar/{id}")
+    public void deletarNinjaPorID(@PathVariable Long id) {
+        ninjaService.deletarNinjaPorID(id);
     }
 }
