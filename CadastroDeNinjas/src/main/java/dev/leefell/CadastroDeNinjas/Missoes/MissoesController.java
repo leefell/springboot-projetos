@@ -1,14 +1,23 @@
 package dev.leefell.CadastroDeNinjas.Missoes;
 
+import dev.leefell.CadastroDeNinjas.Ninjas.NinjaService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("missoes") // localhost:8080/missoes/criar
 public class MissoesController {
 
+    private MissoesService missoesService;
+
+    public MissoesController(MissoesService missoesService) {
+        this.missoesService = missoesService;
+    }
+
     @GetMapping("/listar")
-    public String listarMissoees() {
-        return "Missões listadas com sucesso";
+    public List<MissoesModel> listarMissoees() {
+        return missoesService.listarMissoes();
     }
 
     @PostMapping("/criar")
