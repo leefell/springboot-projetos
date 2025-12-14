@@ -1,6 +1,5 @@
 package dev.leefell.CadastroDeNinjas.Missoes;
 
-import dev.leefell.CadastroDeNinjas.Ninjas.NinjaService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +29,9 @@ public class MissoesController {
         return missoesService.criarMissao(missoesModel);
     }
 
-    @PutMapping("/alterar")
-    public String alterarMissao() {
-        return "Missão alterada com sucesso";
+    @PutMapping("/atualizar/{id}")
+    public MissoesModel atualizarMissao(@PathVariable Long id, @RequestBody MissoesModel missaoAtualizada) {
+        return missoesService.atualizarMissao(id, missaoAtualizada);
     }
 
     @DeleteMapping("/deletar")
