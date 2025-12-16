@@ -9,9 +9,11 @@ import java.util.Optional;
 public class MissoesService {
 
     private MissoesRepository missoesRepository;
+    private MissoesMapper missoesMapper;
 
-    public MissoesService(MissoesRepository missoesRepository) {
+    public MissoesService(MissoesRepository missoesRepository, MissoesMapper missoesMapper) {
         this.missoesRepository = missoesRepository;
+        this.missoesMapper = missoesMapper;
     }
 
     public List<MissoesModel> listarMissoes(){
@@ -23,8 +25,16 @@ public class MissoesService {
         return  missoesModel.orElse(null);
     }
 
-    public MissoesModel criarMissao(MissoesModel missoesModel){
-        return missoesRepository.save(missoesModel);
+    public MissoesDTO criarMissao(MissoesDTO missoesDTO){
+
+        // 1: "Traduz" o missaoDTO vindo do controller para missaoModel
+        MissoesModel missao = missoesMapper.map(missoesDTO);
+
+        // 2: Salva o objeto no banco de dados como missaoModel
+        missao = missoesRepository.save(missao);
+
+        // 3: Converte o resultado novamente em missaoDTO e devolve pro cliente
+        return missoesMapper.map(missao);
     }
 
     public MissoesModel atualizarMissao(Long id, MissoesModel missaoAtualizada){
