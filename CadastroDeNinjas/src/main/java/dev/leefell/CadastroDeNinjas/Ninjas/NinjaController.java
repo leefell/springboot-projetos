@@ -14,37 +14,27 @@ public class NinjaController {
         this.ninjaService = ninjaService;
     }
 
-    @GetMapping("/boasvindas") // Mapeia requisições GET no caminho "/boasvindas"
-    public String boasVindas() {
-        return "Primeira rota da aplicação";
-    }
-
-    // Adiciona (CREATE)
     @PostMapping("/criar") // @RequestBody -> sinaliza que o usuário tem que mandar uma requisição com corpo
-    public NinjaModel criarNinja(@RequestBody NinjaModel ninjaModel) {
-        return ninjaService.criarNinja(ninjaModel);
+    public NinjaDTO criarNinja(@RequestBody NinjaDTO ninjaDTO) {
+        return ninjaService.criarNinja(ninjaDTO);
     }
 
-    // Mostrar (READ)
     @GetMapping("/listar")
-    public List<NinjaModel> listarNinjas() {
+    public List<NinjaDTO> listarNinjas() {
         return ninjaService.listarNinjas();
     }
 
-    // Procura por ID (READ)
     @GetMapping("/listar/{id}")
-    public NinjaModel listarNinjaPorID(@PathVariable Long id) {
+    public NinjaDTO listarNinjaPorID(@PathVariable Long id) {
         // @PathVariable assina que a o argumento é o id vindo da url
         return ninjaService.listarNinjaPorID(id);
     }
 
-    // Alterar dados (UPDATE)
     @PutMapping("/alterar/{id}")
-    public NinjaModel atualizarNinja(@PathVariable Long id, @RequestBody NinjaModel ninjaAtualizado) {
+    public NinjaDTO atualizarNinja(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado) {
         return ninjaService.atualizarNinja(id, ninjaAtualizado);
     }
 
-    // Deletar (DELETE)
     @DeleteMapping("/deletar/{id}")
     public void deletarNinjaPorID(@PathVariable Long id) {
         ninjaService.deletarNinjaPorID(id);
