@@ -1,9 +1,11 @@
 package dev.leefell.CadastroDeNinjas.Missoes;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MissoesService {
@@ -16,16 +18,19 @@ public class MissoesService {
         this.missoesMapper = missoesMapper;
     }
 
-    public List<MissoesModel> listarMissoes(){
-        return missoesRepository.findAll();
+    public List<MissoesDTO> listarMissoes() {
+        List<MissoesModel> missoes = missoesRepository.findAll();
+        return missoes.stream()
+                .map(missoesMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public MissoesModel listarMissoesPorID(Long id){
+    public MissoesDTO listarMissoesPorID(Long id) {
         Optional<MissoesModel> missoesModel = missoesRepository.findById(id);
-        return  missoesModel.orElse(null);
+        return missoesModel.map(missoesMapper::map).orElse(null);
     }
 
-    public MissoesDTO criarMissao(MissoesDTO missoesDTO){
+    public MissoesDTO criarMissao(MissoesDTO missoesDTO) {
 
         // 1: "Traduz" o missaoDTO vindo do controller para missaoModel
         MissoesModel missao = missoesMapper.map(missoesDTO);
@@ -37,11 +42,22 @@ public class MissoesService {
         return missoesMapper.map(missao);
     }
 
-    public MissoesModel atualizarMissao(Long id, MissoesModel missaoAtualizada){
-        if(missoesRepository.existsById(id)){
+    public MissoesDTO atualizarMissao(Long id, MissoesDTO missoesDTO) {
+        Optional<MissoesModel> missaoExistente = missoesRepository.findById(id);
+        if (missaoExistente.isPresent()) {
+            MissoesModel missaoAtualizada = missoesMapper.map(missoesDTO);
             missaoAtualizada.setId(id);
-            return missoesRepository.save(missaoAtualizada);
+            MissoesModel missaoSalva = missoesRepository.save(missaoAtualizada);
+            return missoesMapper.map(missaoSalva);
         }
         return null;
+    }
+
+    public void deletarMissaoPorID(Long id) {
+        try{
+        missoesRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Não é possível deletar a missão, pois existem ninjas vinculados a ela");
+        }
     }
 }
