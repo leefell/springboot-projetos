@@ -37,8 +37,12 @@ public class NinjaService {
         return ninjaMapper.map(ninja);
     }
 
-    public void deletarNinjaPorID(Long id){
+    public boolean deletarNinjaPorID(Long id) {
+        if (!ninjaRepository.existsById(id)) {
+            return false;
+        }
         ninjaRepository.deleteById(id);
+        return true;
     }
 
     public NinjaDTO atualizarNinja(Long id, NinjaDTO ninjaDTO) {
