@@ -18,18 +18,6 @@ public class MissoesService {
         this.missoesMapper = missoesMapper;
     }
 
-    public List<MissoesDTO> listarMissoes() {
-        List<MissoesModel> missoes = missoesRepository.findAll();
-        return missoes.stream()
-                .map(missoesMapper::map)
-                .collect(Collectors.toList());
-    }
-
-    public MissoesDTO listarMissoesPorID(Long id) {
-        Optional<MissoesModel> missoesModel = missoesRepository.findById(id);
-        return missoesModel.map(missoesMapper::map).orElse(null);
-    }
-
     public MissoesDTO criarMissao(MissoesDTO missoesDTO) {
 
         // 1: "Traduz" o missaoDTO vindo do controller para missaoModel
@@ -53,11 +41,31 @@ public class MissoesService {
         return null;
     }
 
-    public void deletarMissaoPorID(Long id) {
-        try{
-        missoesRepository.deleteById(id);
+    public List<MissoesDTO> listarMissoes() {
+        List<MissoesModel> missoes = missoesRepository.findAll();
+        return missoes.stream()
+                .map(missoesMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    public MissoesDTO listarMissoesPorID(Long id) {
+        Optional<MissoesModel> missoesModel = missoesRepository.findById(id);
+        return missoesModel.map(missoesMapper::map).orElse(null);
+    }
+
+    public boolean deletarMissaoPorID(Long id) {
+        if (!missoesRepository.existsById(id)) {
+            return false;
+        }
+
+        try {
+            missoesRepository.deleteById(id);
+            return true;
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("Não é possível deletar a missão, pois existem ninjas vinculados a ela");
+            throw new RuntimeException(
+                    "Não é possível deletar a missão, pois existem ninjas vinculados a ela"
+            );
         }
     }
+
 }
