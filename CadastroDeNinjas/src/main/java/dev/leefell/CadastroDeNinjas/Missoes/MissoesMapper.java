@@ -27,4 +27,18 @@ public class MissoesMapper {
         return missoesDTO;
     }
 
+    public void atualizaEntidadePeloDTO(MissoesDTO dto, MissoesModel model){
+        if (dto.getNome() != null){
+            model.setNome(dto.getNome());
+        }
+
+        if(dto.getDificuldade() != null){
+            model.setDificuldade(dto.getDificuldade());
+        }
+
+        if(dto.getNinjas() != null){
+            model.setNinjas(dto.getNinjas());
+        }
+    }
+
 }

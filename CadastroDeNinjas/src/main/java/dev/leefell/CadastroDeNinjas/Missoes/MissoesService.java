@@ -31,14 +31,14 @@ public class MissoesService {
     }
 
     public MissoesDTO atualizarMissao(Long id, MissoesDTO missoesDTO) {
-        Optional<MissoesModel> missaoExistente = missoesRepository.findById(id);
-        if (missaoExistente.isPresent()) {
-            MissoesModel missaoAtualizada = missoesMapper.map(missoesDTO);
-            missaoAtualizada.setId(id);
-            MissoesModel missaoSalva = missoesRepository.save(missaoAtualizada);
-            return missoesMapper.map(missaoSalva);
-        }
-        return null;
+        MissoesModel missao = missoesRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Missão não encontrada"));
+
+        missoesMapper.atualizaEntidadePeloDTO(missoesDTO, missao);
+
+        MissoesModel missaoSalva = missoesRepository.save(missao);
+
+        return missoesMapper.map(missaoSalva);
     }
 
     public List<MissoesDTO> listarMissoes() {
