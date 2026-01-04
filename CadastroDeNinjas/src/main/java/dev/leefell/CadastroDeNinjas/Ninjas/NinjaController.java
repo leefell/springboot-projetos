@@ -16,25 +16,11 @@ public class NinjaController {
         this.ninjaService = ninjaService;
     }
 
-    @PostMapping("/criar") // @RequestBody -> sinaliza que o usuário tem que mandar uma requisição com corpo
+    @PostMapping("/criar")
     public ResponseEntity<String> criarNinja(@RequestBody NinjaDTO ninjaDTO) {
         NinjaDTO novoNinja = ninjaService.criarNinja(ninjaDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Ninja criado com sucesso: " + novoNinja.getNome() + " ID: " + novoNinja.getId());
-    }
-
-    @GetMapping("/listar")
-    public ResponseEntity<List<NinjaDTO>> listarNinjas() {
-        return ResponseEntity.ok(ninjaService.listarNinjas());
-    }
-
-    @GetMapping("/listar/{id}")
-    public ResponseEntity<NinjaDTO> listarNinjaPorID(@PathVariable Long id) {
-        NinjaDTO ninja = ninjaService.listarNinjaPorID(id);
-        if (ninja == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(ninja);
     }
 
     @PutMapping("/atualizar/{id}")
@@ -46,6 +32,21 @@ public class NinjaController {
         return ResponseEntity.ok(ninja);
     }
 
+    @GetMapping("/listar")
+    public ResponseEntity<List<NinjaDTO>> listarNinjas() {
+        return ResponseEntity.ok(ninjaService.listarNinjas());
+    }
+
+    @GetMapping("/listar/{id}")
+    public ResponseEntity<NinjaDTO> listarNinjaPorID(@PathVariable Long id) {
+        // Pode deixar genérico, assim podendo passar uma mensagem no body caso n encontre ou
+        // retornando o model caso encontre
+        NinjaDTO ninja = ninjaService.listarNinjaPorID(id);
+        if (ninja == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(ninja);
+    }
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<String> deletarNinjaPorID(@PathVariable Long id) {
@@ -56,5 +57,4 @@ public class NinjaController {
         }
         return ResponseEntity.ok("Ninja com ID: " + id + " deletado com sucesso");
     }
-
 }

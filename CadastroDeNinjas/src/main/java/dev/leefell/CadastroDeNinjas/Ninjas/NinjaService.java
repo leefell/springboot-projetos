@@ -18,7 +18,24 @@ public class NinjaService {
         this.ninjaMapper = ninjaMapper;
     }
 
+    public NinjaDTO criarNinja(NinjaDTO ninjaDTO) {
+        NinjaModel ninja = ninjaMapper.map(ninjaDTO);
+        ninja = ninjaRepository.save(ninja);
+        return ninjaMapper.map(ninja);
+    }
+
     // Metodo do JPA que executa automaticamente uma query SELECT * FROM na tabela de ninjas
+    public NinjaDTO atualizarNinja(Long id, NinjaDTO ninjaDTO) {
+        Optional<NinjaModel> ninjaExistente = ninjaRepository.findById(id);
+        if (ninjaExistente.isPresent()) {
+            NinjaModel ninjaAtualizado = ninjaMapper.map(ninjaDTO);
+            ninjaAtualizado.setId(id);
+            NinjaModel ninjaSalvo = ninjaRepository.save(ninjaAtualizado);
+            return ninjaMapper.map(ninjaSalvo);
+        }
+        return null;
+    }
+
     public List<NinjaDTO> listarNinjas() {
         List<NinjaModel> ninjas = ninjaRepository.findAll();
         return ninjas.stream()
@@ -31,12 +48,6 @@ public class NinjaService {
         return ninjaPorID.map(ninjaMapper::map).orElse(null);
     }
 
-    public NinjaDTO criarNinja(NinjaDTO ninjaDTO){
-        NinjaModel ninja = ninjaMapper.map(ninjaDTO);
-        ninja = ninjaRepository.save(ninja);
-        return ninjaMapper.map(ninja);
-    }
-
     public boolean deletarNinjaPorID(Long id) {
         if (!ninjaRepository.existsById(id)) {
             return false;
@@ -45,14 +56,4 @@ public class NinjaService {
         return true;
     }
 
-    public NinjaDTO atualizarNinja(Long id, NinjaDTO ninjaDTO) {
-        Optional<NinjaModel> ninjaExistente = ninjaRepository.findById(id);
-        if(ninjaExistente.isPresent()){
-            NinjaModel ninjaAtualizado = ninjaMapper.map(ninjaDTO);
-            ninjaAtualizado.setId(id);
-            NinjaModel ninjaSalvo = ninjaRepository.save(ninjaAtualizado);
-            return ninjaMapper.map(ninjaSalvo);
-        }
-        return null;
-    }
 }
