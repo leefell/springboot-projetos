@@ -26,14 +26,14 @@ public class NinjaService {
 
     // Metodo do JPA que executa automaticamente uma query SELECT * FROM na tabela de ninjas
     public NinjaDTO atualizarNinja(Long id, NinjaDTO ninjaDTO) {
-        Optional<NinjaModel> ninjaExistente = ninjaRepository.findById(id);
-        if (ninjaExistente.isPresent()) {
-            NinjaModel ninjaAtualizado = ninjaMapper.map(ninjaDTO);
-            ninjaAtualizado.setId(id);
-            NinjaModel ninjaSalvo = ninjaRepository.save(ninjaAtualizado);
-            return ninjaMapper.map(ninjaSalvo);
-        }
-        return null;
+        NinjaModel ninja = ninjaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ninja não encontrado"));
+
+        ninjaMapper.atualizaEntidadePeloDTO(ninjaDTO, ninja);
+
+        NinjaModel ninjaSalvo = ninjaRepository.save(ninja);
+
+        return ninjaMapper.map(ninjaSalvo);
     }
 
     public List<NinjaDTO> listarNinjas() {

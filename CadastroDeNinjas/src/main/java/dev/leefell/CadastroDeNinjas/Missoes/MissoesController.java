@@ -27,13 +27,16 @@ public class MissoesController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível criar a missão");
     }
 
-    @PutMapping("/atualizar/{id}")
+    @PatchMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizarMissao(@PathVariable Long id, @RequestBody MissoesDTO missaoAtualizada) {
-        MissoesDTO missao = missoesService.atualizarMissao(id, missaoAtualizada);
+        MissoesDTO missao = missoesService.listarMissoesPorID(id);
         if (missao == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("A missão a ser atualizada não foi encontrada");
         }
-        return ResponseEntity.ok(missao);
+        MissoesDTO missaoAtualizadaFinal =
+                missoesService.atualizarMissao(id, missaoAtualizada);
+
+        return ResponseEntity.ok(missaoAtualizadaFinal);
     }
 
     @GetMapping("/listar")
