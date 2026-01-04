@@ -31,4 +31,26 @@ public class NinjaMapper {
         return ninjaDTO;
     }
 
+    public void atualizaEntidadePeloDTO(NinjaDTO dto, NinjaModel model){
+        if(dto.getNome() != null){
+            model.setNome(dto.getNome());
+        }
+
+        if(dto.getEmail() != null){
+            model.setEmail(dto.getEmail());
+        }
+
+        if(dto.getIdade() != null){
+            model.setIdade(dto.getIdade());
+        }
+
+        if(dto.getMissoes() != null){
+            model.setMissoes(dto.getMissoes());
+        }
+
+        if(dto.getRank() != null){
+            model.setRank(dto.getRank());
+        }
+    }
+
 }

@@ -23,7 +23,7 @@ public class NinjaController {
                 .body("Ninja criado com sucesso: " + novoNinja.getNome() + " ID: " + novoNinja.getId());
     }
 
-    @PutMapping("/atualizar/{id}")
+    @PatchMapping("/atualizar/{id}")
     public ResponseEntity<NinjaDTO> atualizarNinja(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado) {
         NinjaDTO ninja = ninjaService.atualizarNinja(id, ninjaAtualizado);
         if (ninja == null) {
