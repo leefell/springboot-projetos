@@ -1,5 +1,6 @@
 package dev.leefell.CadastroDeNinjas.Ninjas;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,13 @@ public class NinjaController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<NinjaDTO> criarNinja(@RequestBody NinjaDTO ninjaDTO) {
+    public ResponseEntity<NinjaDTO> criarNinja(@Valid @RequestBody NinjaDTO ninjaDTO) {
         NinjaDTO novoNinja = ninjaService.criarNinja(ninjaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoNinja);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<NinjaDTO> atualizarNinja(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado) {
+    public ResponseEntity<NinjaDTO> atualizarNinja(@Valid @PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado) {
         NinjaDTO ninja = ninjaService.atualizarNinja(id, ninjaAtualizado);
         if (ninja == null) {
             return ResponseEntity.notFound().build();

@@ -1,5 +1,6 @@
 package dev.leefell.CadastroDeNinjas.Missoes;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,13 @@ public class MissoesController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<MissoesDTO> criarMissao(@RequestBody MissoesDTO missaoDTO) {
+    public ResponseEntity<MissoesDTO> criarMissao(@Valid @RequestBody MissoesDTO missaoDTO) {
         MissoesDTO novaMissao = missoesService.criarMissao(missaoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaMissao);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<MissoesDTO> atualizarMissao(@PathVariable Long id, @RequestBody MissoesDTO missaoAtualizada) {
+    public ResponseEntity<MissoesDTO> atualizarMissao(@Valid @PathVariable Long id, @RequestBody MissoesDTO missaoAtualizada) {
         MissoesDTO missao = missoesService.atualizarMissao(id, missaoAtualizada);
         if (missao == null) {
             return ResponseEntity.notFound().build();
