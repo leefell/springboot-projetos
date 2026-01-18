@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/ninjas") // Define a URL base para os endpoints deste controller
 public class NinjaController {
 
-    private NinjaService ninjaService;
+    private final NinjaService ninjaService;
 
     public NinjaController(NinjaService ninjaService) {
         this.ninjaService = ninjaService;
