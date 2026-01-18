@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 // JPA = Java Persistence API
 // Lombok cria o construtor, getter e setters de acordo com a Annotation,
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data // Cria getters e setters
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "missoes")
 public class NinjaModel {
 
     @Id // O Atributo abaixo dele é o ID
